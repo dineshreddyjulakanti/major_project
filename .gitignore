@@ -1,0 +1,32 @@
+# Ignore everything by default
+*
+
+# Keep repo metadata/config files
+!.gitignore
+!.gitattributes
+
+# Allow root folders to be traversed
+!audio/
+!image/
+!txt/
+
+# Re-ignore everything inside allowed folders first
+audio/*
+image/*
+txt/*
+
+# Keep only requested files from audio
+!audio/.env
+!audio/app.py
+!audio/label_encoder.pkl
+!audio/model_cnn.keras
+
+# Keep only requested files from image
+!image/app.py
+!image/final_resnet50_mood
+!image/final_resnet50_mood.h5
+
+# Keep only requested paths from txt
+!txt/app.py
+!txt/modify_bert_model/
+!txt/modify_bert_model/**
