@@ -4,6 +4,7 @@
 # Keep repo metadata/config files
 !.gitignore
 !.gitattributes
+!README.md
 
 # Allow root folders to be traversed
 !audio/
