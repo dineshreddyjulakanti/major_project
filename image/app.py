@@ -26,14 +26,14 @@ EMOTION_LABELS = {
 
 # Mapping Moods to Spotify Search Queries
 MOOD_PLAYLISTS = {
-    'Angry': 'calming classical piano',
-    'Disgust': 'chill acoustic',
-    'Fear': 'comforting songs',
-    'Happy': 'upbeat pop hits 2024',
-    'Neutral': 'lofi hip hop study',
-    'Sad': 'uplifting songs to make you happy',
-    'Surprise': 'hyperpop energy',
-    'No Face': 'instrumental background'
+    'Angry': 'spotify:playlist:37i9dQZF1DWXIcbzpLauPS',
+    'Disgust': 'spotify:playlist:37i9dQZF1DX4WYpdgoIcn6',
+    'Fear': 'spotify:playlist:37i9dQZF1DWZqd5JICZI0u',
+    'Happy': 'spotify:playlist:37i9dQZF1DXdPec7aLTmlC',
+    'Neutral': 'spotify:playlist:37i9dQZF1DX8Uebhn9wzrS',
+    'Sad': 'spotify:playlist:37i9dQZF1DX7qK8ma5wgG1',
+    'Surprise': 'spotify:playlist:37i9dQZF1DX0BcQWzuB7ZO',
+    'No Face': 'spotify:playlist:37i9dQZF1DX4WYpdgoIcn6'
 }
 
 def load_inference_model():

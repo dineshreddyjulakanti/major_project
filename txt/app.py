@@ -17,23 +17,12 @@ MODEL_PATH = "./modify_bert_model"
 # Updated for Kaggle Dataset Emotions
 # Updated Map to match your Model's specific outputs
 EMOTION_MUSIC_MAP = {
-    # LOG SAYS: "joy"
-    "joy": "Tollywood Party Songs",       
-    
-    # LOG SAYS: "sad" (Your model uses 'sad', not 'sadness')
+    "joy": "Tollywood Party Songs",
     "sad": "Telugu Sad Songs",
-    "sadness": "Telugu Sad Songs", # Keeping both just in case
-    
-    # LOG SAYS: "anger"
-    "anger": "Telugu Mass Action Songs",     
-    
-    # LOG SAYS: "fear"
-    "fear": "Telugu Devotional Songs",      
-    
-    # LOG SAYS: "love"
-    "love": "spotify:playlist:37i9dQZF1DX44F1QWqYoaV",      
-    
-    # LOG SAYS: "suprise" (Your dataset likely has this typo)
+    "sadness": "Telugu Sad Songs",
+    "anger": "Telugu Mass Action Songs",
+    "fear": "Telugu Devotional Songs",
+    "love": "spotify:playlist:37i9dQZF1DX44F1QWqYoaV",
     "suprise": "Telugu Dance Hits",
     "surprise": "Telugu Dance Hits"
 }

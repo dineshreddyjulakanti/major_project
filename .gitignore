@@ -5,6 +5,15 @@
 !.gitignore
 !.gitattributes
 !README.md
+!mobile-app/
+!mobile-app/**
+
+# Ignore mobile app generated dependencies/build files
+mobile-app/node_modules/
+mobile-app/.expo/
+mobile-app/dist/
+mobile-app/android/
+mobile-app/ios/
 
 # Allow root folders to be traversed
 !audio/

@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Moodify Mobile",
+    "slug": "moodify-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "permissions": ["RECORD_AUDIO", "CAMERA"]
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app uses microphone for live audio mood detection.",
+        "NSCameraUsageDescription": "This app uses camera for live image mood detection.",
+        "NSPhotoLibraryUsageDescription": "This app needs gallery access to select images."
+      }
+    }
+  }
+}

@@ -3,6 +3,10 @@ import os
 import pickle
 import numpy as np
 import librosa
+
+# Load the legacy tf.keras stack so older saved models deserialize correctly.
+os.environ.setdefault("TF_USE_LEGACY_KERAS", "1")
+
 import tensorflow as tf
 from dotenv import load_dotenv
 import spotipy
@@ -39,13 +43,13 @@ class SpotifyService:
                 print(f"❌ Spotify Auth Failed: {e}")
 
         self.search_mapping = {
-            'happy': "Happy Pop", 
-            'sad': "Sad Acoustic",
-            'angry': "Heavy Metal",
-            'fearful': "Dark Ambient",
-            'disgust': "Grunge",
-            'surprised': "Party Dance",
-            'neutral': "Lo-Fi Beats"
+            'happy': "spotify:playlist:37i9dQZF1DXdPec7aLTmlC",
+            'sad': "spotify:playlist:37i9dQZF1DX7qK8ma5wgG1",
+            'angry': "spotify:playlist:37i9dQZF1DWXIcbzpLauPS",
+            'fearful': "spotify:playlist:37i9dQZF1DWZqd5JICZI0u",
+            'disgust': "spotify:playlist:37i9dQZF1DX4WYpdgoIcn6",
+            'surprised': "spotify:playlist:37i9dQZF1DX0BcQWzuB7ZO",
+            'neutral': "spotify:playlist:37i9dQZF1DX8Uebhn9wzrS"
         }
 
     def play_music_for_mood(self, mood_label):
@@ -84,14 +88,26 @@ spotify_service = SpotifyService()
 def load_ml_resources():
     model = None
     encoder = None
-    try:
-        if os.path.exists(MODEL_PATH):
+
+    if os.path.exists(MODEL_PATH):
+        try:
             model = tf.keras.models.load_model(MODEL_PATH)
-        if os.path.exists(ENCODER_PATH):
+            print("✅ Audio model loaded.")
+        except Exception as e:
+            print(f"❌ Error loading model '{MODEL_PATH}': {e}")
+    else:
+        print(f"❌ Model file not found: {MODEL_PATH}")
+
+    if os.path.exists(ENCODER_PATH):
+        try:
             with open(ENCODER_PATH, "rb") as f:
                 encoder = pickle.load(f)
-    except Exception as e:
-        print(f"❌ Error loading ML resources: {e}")
+            print("✅ Label encoder loaded.")
+        except Exception as e:
+            print(f"❌ Error loading encoder '{ENCODER_PATH}': {e}")
+    else:
+        print(f"❌ Encoder file not found: {ENCODER_PATH}")
+
     return model, encoder
 
 model, encoder = load_ml_resources()
@@ -102,7 +118,15 @@ def preprocess_audio(file_path):
     SAMPLES_PER_TRACK = SAMPLE_RATE * DURATION
     try:
         y, sr = librosa.load(file_path, sr=SAMPLE_RATE, duration=DURATION)
-        if np.max(np.abs(y)) < 0.005: return None
+        if y is None or len(y) == 0:
+            return None
+
+        peak = float(np.max(np.abs(y)))
+        if peak < 1e-8:
+            return None
+
+        y = y / peak
+
         if len(y) > SAMPLES_PER_TRACK:
             y = y[:SAMPLES_PER_TRACK]
         else:
@@ -111,7 +135,8 @@ def preprocess_audio(file_path):
         mel_spec = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128, fmax=8000)
         mel_spec_db = librosa.power_to_db(mel_spec, ref=np.max)
         return mel_spec_db[np.newaxis, ..., np.newaxis]
-    except:
+    except Exception as e:
+        print(f"❌ preprocess_audio failed for {file_path}: {e}")
         return None
 
 # --- PART 3: RECORDING ---
